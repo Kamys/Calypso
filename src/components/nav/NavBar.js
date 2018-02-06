@@ -5,7 +5,7 @@ import $ from "jquery";
 class NavBarCalypso extends Component {
 
 	componentDidMount() {
-		$(".button-collapse").sideNav();
+		$(".button-side-menu").sideNav();
 	}
 
 	render() {
@@ -13,17 +13,15 @@ class NavBarCalypso extends Component {
 			<nav>
 				<div className="nav-wrapper teal">
 					<div className="container">
-						<a href="#" className="brand-logo">Калипсо</a>
-						<a href="#" data-activates="side-menu" className="button-collapse"><i
-							className="material-icons md-48">menu</i></a>
-
-						<ul id="nav-mobile" className="right hide-on-med-and-down">
-							<li><a href="#">Группы</a></li>
-							<li><a href="#">Тесты</a></li>
-							<li><a href="#">Отчеты</a></li>
-							<li><a data-target="modal-registration" className="btn-floating red avatar modal-trigger"/>
-							</li>
-						</ul>
+						<div className="row">
+							<div className="col s1">
+								<a href="#" data-activates="side-menu" className="button-side-menu"><i
+									className="material-icons md-48">menu</i></a>
+							</div>
+							<div className="col s10 left-align">
+								<a href="#" className="brand-logo">Калипсо</a>
+							</div>
+						</div>
 					</div>
 				</div>
 			</nav>
