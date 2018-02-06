@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import NavBar from "./nav/NavBar";
 import SideNav from "./nav/SideNav";
-import ModalAuthorization from "./nav/ModalAuthorization";
+import ModalAuthorization from "./ModalAuthorization";
 
 class App extends Component {
 	render() {
