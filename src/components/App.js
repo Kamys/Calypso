@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
-import NavBar from "./nav/NavBar";
-import SideNav from "./nav/SideNav";
-import ModalAuthorization from "./ModalAuthorization";
+import NavBar from "./navigation/NavBar";
+import ModalAuthorization from "./authorization/ModalWindowAuthorization";
 import Router from "react-router-dom/es/Router";
 import Route from "react-router-dom/es/Route";
 import Introductory from "./Introductory";
@@ -13,13 +12,13 @@ class App extends Component {
 	render() {
 		return (
 			<div className="App">
-				<NavBar/>
 				<Router history={history}>
 					<div>
+						<NavBar/>
 						<Route path="/" component={Introductory}/>
+						<ModalAuthorization/>
 					</div>
 				</Router>
-				<ModalAuthorization/>
 			</div>
 		);
 	}
