@@ -19,7 +19,7 @@ class NavBarCalypso extends Component {
 									className="material-icons md-48">menu</i></a>
 							</div>
 							<div className="col s10 left-align">
-								<a href="#" className="brand-logo">Калипсо</a>
+								<a href="#" className="brand-logo">Calypso</a>
 							</div>
 						</div>
 					</div>

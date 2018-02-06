@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import background from './image/background.jpg';
-import avatar from './image/avatar.png';
+import background from '../../image/background.jpg';
+import avatar from '../../image/avatar.png';
 
 class SideNav extends Component {
 	render() {

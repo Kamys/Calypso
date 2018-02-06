@@ -12,8 +12,11 @@ class ModalAuthorization extends Component {
 			<div id="modal-registration" className="modal">
 				<div className="modal-content">
 					<ul className="tabs">
-						<li className="tab col s3"><a className="active" href="#login-tab">Войти</a></li>
-						<li className="tab col s3"><a href="#registration-tab">Регистрация</a></li>
+						<li className="tab col s3">
+							<a className="active teal-text" href={"#login-tab"}>Войти</a></li>
+						<li className="tab col s3">
+							<a className="teal-text" href={"#registration-tab"}>Регистрация</a>
+						</li>
 					</ul>
 					<div id="login-tab" className="col s12">
 						<div className="row">
