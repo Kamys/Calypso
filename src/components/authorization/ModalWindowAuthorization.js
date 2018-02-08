@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import $ from "jquery";
 import TabLogin from "./TabLogin";
 import TabRegistration from "./TabRegistration";
+import './ModalWindowAuthorization.css'
 
 class ModalAuthorization extends Component {
 

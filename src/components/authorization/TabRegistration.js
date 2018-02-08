@@ -20,38 +20,33 @@ class TabRegistration extends Component {
 					<form ref={instance => this.validation(instance)} className="col s12 egistration-tab__form">
 						<div className="row">
 							<div className="input-field col s6">
-								<input name='fullname'
+								<input name="registration-tab__full_name"
 									   id="registration-tab__full_name"
-									   type="text"
-									   data-error=".errorTxt1"
-									   className="validate"/>
-								<label form="registration-tab__full_name">ФИО</label>
+									   type="text"/>
+								<label form="registration-tab__full_name">Как вас зовут (ФИО)</label>
 							</div>
 							<div className="input-field col s6">
 								<input
-									name='login'
+									name="registration-tab__login"
 									id="registration-tab__login"
-									type="text"
-									className='validate'/>
-								<label form="registration-tab__login">Логин</label>
+									type="text"/>
+								<label form="registration-tab__login">Придумайте имя пользователя</label>
 							</div>
 						</div>
 						<div className="row">
 							<div className="input-field col s6">
 								<input
-									name='password'
+									name="registration-tab__password"
 									id="registration-tab__password"
-									type="password"
-									className="validate"/>
-								<label form="registration-tab__password">Пароль</label>
+									type="password"/>
+								<label form="registration-tab__password">Придумайте пароль</label>
 							</div>
 							<div className="input-field col s6">
 								<input
-									name='re-password'
+									name="registration-tab__re-password"
 									id="registration-tab__re-password"
-									type="password"
-									className="validate"/>
-								<label form="registration-tab__re-password">Повторите пароль</label>
+									type="password"/>
+								<label form="registration-tab__re-password">Подтвердите пароль</label>
 							</div>
 						</div>
 						<div className="row">
@@ -67,21 +62,47 @@ class TabRegistration extends Component {
 	}
 
 	validation(instance) {
+		// noinspection JSUnusedGlobalSymbols
+		$.validator.setDefaults({
+			errorClass: "invalid",
+			validClass: "valid",
+			errorPlacement: function (error, element) {
+				$(element)
+					.closest("form")
+					.find("label[form='" + element.attr("id") + "']")
+					.attr("data-error", error.text());
+			}
+		});
+
+		$.extend($.validator.messages, {
+			required: 'Это поле должно быть заполнено.',
+			minlength: $.validator.format("Поле должно содержать больше {0} символов."),
+		});
+
 		$(instance).validate({
 			rules: {
-				fullname: {
+				"registration-tab__full_name": {
 					required: true,
 					minlength: 5
-				}
+				},
+				"registration-tab__login": {
+					required: true,
+					minlength: 5
+				},
+				"registration-tab__password": {
+					required: true,
+					minlength: 5
+				},
+				"registration-tab__re-password": {
+					required: true,
+					minlength: 5,
+					equalTo: "#registration-tab__password"
+				},
 			},
-			errorElement : 'div',
-			errorPlacement: function(error, element) {
-				var placement = $(element).data('error');
-				if (placement) {
-					$(placement).append(error)
-				} else {
-					error.insertAfter(element);
-				}
+			messages: {
+				"registration-tab__re-password": {
+					equalTo: "Пароли не совпадают. Повторите попытку."
+				},
 			}
 		});
 	}
