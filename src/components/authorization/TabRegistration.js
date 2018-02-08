@@ -7,10 +7,16 @@ class TabRegistration extends Component {
 	constructor(props) {
 		super(props);
 		this.onRegistration = this.onRegistration.bind(this);
+		this.state = {
+			fullName: '',
+			login: '',
+			password: '',
+		};
 	}
 
 	onRegistration = () => {
-
+		const {fullName, login, password} = this.state;
+		
 	};
 
 	render() {
@@ -20,13 +26,16 @@ class TabRegistration extends Component {
 					<form ref={instance => this.validation(instance)} className="col s12 egistration-tab__form">
 						<div className="row">
 							<div className="input-field col s6">
-								<input name="registration-tab__full_name"
-									   id="registration-tab__full_name"
-									   type="text"/>
+								<input
+									onChange={e => this.setState({fullName: e.target.value})}
+									name="registration-tab__full_name"
+									id="registration-tab__full_name"
+									type="text"/>
 								<label form="registration-tab__full_name">Как вас зовут (ФИО)</label>
 							</div>
 							<div className="input-field col s6">
 								<input
+									onChange={e => this.setState({login: e.target.value})}
 									name="registration-tab__login"
 									id="registration-tab__login"
 									type="text"/>
@@ -36,6 +45,7 @@ class TabRegistration extends Component {
 						<div className="row">
 							<div className="input-field col s6">
 								<input
+									onChange={e => this.setState({password: e.target.value})}
 									name="registration-tab__password"
 									id="registration-tab__password"
 									type="password"/>
@@ -61,7 +71,7 @@ class TabRegistration extends Component {
 		);
 	}
 
-	validation(instance) {
+	validation(registrationForm) {
 		// noinspection JSUnusedGlobalSymbols
 		$.validator.setDefaults({
 			errorClass: "invalid",
@@ -71,7 +81,8 @@ class TabRegistration extends Component {
 					.closest("form")
 					.find("label[form='" + element.attr("id") + "']")
 					.attr("data-error", error.text());
-			}
+			},
+			submitHandler: this.onRegistration,
 		});
 
 		$.extend($.validator.messages, {
@@ -79,7 +90,7 @@ class TabRegistration extends Component {
 			minlength: $.validator.format("Поле должно содержать больше {0} символов."),
 		});
 
-		$(instance).validate({
+		$(registrationForm).validate({
 			rules: {
 				"registration-tab__full_name": {
 					required: true,
