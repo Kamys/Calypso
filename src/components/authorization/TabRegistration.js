@@ -1,71 +1,122 @@
 import React, {Component} from 'react';
 import $ from "jquery";
 import "jquery-validation";
+import Api from "../../api/Api";
+import * as Materialize from "materialize-css";
+import InputData from "./InputData";
 
+/**
+ * Use for registration user;
+ */
 class TabRegistration extends Component {
 
 	constructor(props) {
 		super(props);
 		this.onRegistration = this.onRegistration.bind(this);
 		this.state = {
-			fullName: '',
-			login: '',
-			password: '',
+			fullName: "",
+			login: "",
+			password: "",
+			rePassword: "",
+			isRegistrationComplete: false,
+			isLoading: false,
 		};
 	}
 
 	onRegistration = () => {
 		const {fullName, login, password} = this.state;
-		
+		let api = new Api();
+		let registration = api.registration(fullName, login, password);
+		registration.then(
+			result => {
+				this.setState({isRegistrationComplete: true, isLoading: false});
+				result.map((messages) => {
+					Materialize.toast(messages, 3000, 'green');
+				});
+			},
+			error => {
+				error.map((messages) => {
+					Materialize.toast(messages, 5000, 'red');
+				});
+				this.setState({isLoading: false});
+			}
+		);
+		this.setState({isLoading: true});
+	};
+
+	registrationTabContent = () => {
+		if (this.state.isLoading) {
+			return (
+				<div className="container center">
+					<div className="row center-align">
+						<div className='col s12'>
+							<h3 className='header teal-text'>Регистрация...</h3>
+						</div>
+						<div className='col s12'>
+							<div className="progress">
+								<div className="indeterminate"/>
+							</div>
+						</div>
+					</div>
+				</div>
+			)
+		} else if (this.state.isRegistrationComplete) {
+			return (
+				<div className="container center">
+					<div className="row">
+						<div className="col s12">
+							<h5 className='header teal-text'>Регистрация завершена!</h5>
+						</div>
+						<div className="col s12">
+							<a onClick={this.props.closeModalRegistration}
+							   className="waves-effect waves-light btn-large">Продолжить</a>
+						</div>
+					</div>
+				</div>
+			)
+		} else {
+			return (<form id="registration-form" ref={instance => this.validation(instance)}
+						  className="col s12 egistration-tab__form">
+				<div className="row">
+					<div className="input-field col s6">
+						<InputData value={this.state.fullName} onChangeValue={value => this.setState({fullName: value})}
+								   id="registration-tab__full_name" labelText="Как вас зовут (ФИО)"/>
+					</div>
+					<div className="input-field col s6">
+						<InputData value={this.state.login} onChangeValue={value => this.setState({login: value})}
+								   id="registration-tab__login" labelText="Придумайте логин"/>
+					</div>
+				</div>
+				<div className="row">
+					<div className="input-field col s6">
+						<InputData value={this.state.password} type="password"
+								   onChangeValue={value => this.setState({password: value})}
+								   id="registration-tab__password" labelText="Придумайте пароль"/>
+					</div>
+					<div className="input-field col s6">
+						<InputData value={this.state.rePassword} type="password"
+								   onChangeValue={value => this.setState({rePassword: value})}
+								   id="registration-tab__re-password" labelText="Подтвердите пароль"/>
+					</div>
+				</div>
+				<div className="row">
+					<div className="input-field col s12 center">
+						<button type="submit" form="registration-form" value="Submit"
+								className="registration-tab__btn-registration waves-effect waves-light btn">Регистрация
+						</button>
+					</div>
+				</div>
+			</form>)
+		}
 	};
 
 	render() {
 		return (
 			<div id="registration-tab" className="col s12">
 				<div className="row">
-					<form ref={instance => this.validation(instance)} className="col s12 egistration-tab__form">
-						<div className="row">
-							<div className="input-field col s6">
-								<input
-									onChange={e => this.setState({fullName: e.target.value})}
-									name="registration-tab__full_name"
-									id="registration-tab__full_name"
-									type="text"/>
-								<label form="registration-tab__full_name">Как вас зовут (ФИО)</label>
-							</div>
-							<div className="input-field col s6">
-								<input
-									onChange={e => this.setState({login: e.target.value})}
-									name="registration-tab__login"
-									id="registration-tab__login"
-									type="text"/>
-								<label form="registration-tab__login">Придумайте имя пользователя</label>
-							</div>
-						</div>
-						<div className="row">
-							<div className="input-field col s6">
-								<input
-									onChange={e => this.setState({password: e.target.value})}
-									name="registration-tab__password"
-									id="registration-tab__password"
-									type="password"/>
-								<label form="registration-tab__password">Придумайте пароль</label>
-							</div>
-							<div className="input-field col s6">
-								<input
-									name="registration-tab__re-password"
-									id="registration-tab__re-password"
-									type="password"/>
-								<label form="registration-tab__re-password">Подтвердите пароль</label>
-							</div>
-						</div>
-						<div className="row">
-							<div className="input-field col s12 center">
-								<a onClick={this.onRegistration}
-								   className="registration-tab__btn-registration waves-effect waves-light btn">Регистрация</a>
-							</div>
-						</div>
-					</form>
+					<div className='col s12'>
+						{this.registrationTabContent()}
+					</div>
 				</div>
 			</div>
 		);

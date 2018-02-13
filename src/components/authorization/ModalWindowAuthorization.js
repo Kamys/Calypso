@@ -6,13 +6,27 @@ import './ModalWindowAuthorization.css'
 
 class ModalAuthorization extends Component {
 
+	constructor(props) {
+		super(props);
+
+		this.state = {
+			modalRegistration: () =>{},
+		}
+	}
+
 	componentDidMount() {
 		$('.modal').modal();
 	}
 
+	closeModalRegistration = () => {
+		$(this.state.modalRegistration).modal('close');
+	};
+
 	render() {
 		return (
-			<div id="modal-registration" className="modal">
+			<div ref={(modalRegistration) => {
+				this.state.modalRegistration = modalRegistration
+			}} id="modal-registration" className="modal">
 				<div className="modal-content">
 					<ul className="tabs">
 						<li className="tab col s3">
@@ -22,7 +36,7 @@ class ModalAuthorization extends Component {
 						</li>
 					</ul>
 					<TabLogin/>
-					<TabRegistration/>
+					<TabRegistration closeModalRegistration={this.closeModalRegistration}/>
 				</div>
 			</div>
 		);
