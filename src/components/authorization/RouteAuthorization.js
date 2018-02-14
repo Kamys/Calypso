@@ -1,6 +1,5 @@
 import React, {Component} from 'react'
 import Api from '../../../src/api/Api'
-import Introductory from "../Introductory";
 import Redirect from "react-router-dom/es/Redirect";
 
 class RouteAuthorization extends Component {

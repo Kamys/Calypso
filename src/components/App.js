@@ -17,8 +17,8 @@ class App extends Component {
 				<Router history={history}>
 					<div>
 						<NavBar/>
+						<Route exact path="/" component={RouteAuthorization} page={<UserAccount/>}/>
 						<Route path="/Introductory" component={Introductory}/>
-						<RouteAuthorization path="/" page={<UserAccount/>}/>
 						<ModalAuthorization history={history}/>
 					</div>
 				</Router>

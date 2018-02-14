@@ -2,9 +2,7 @@ import React, {Component} from 'react';
 import $ from "jquery";
 import "jquery-validation";
 import Api from "../../api/Api";
-import * as Materialize from "materialize-css";
 import InputData from "./InputData";
-import Link from "react-router-dom/es/Link";
 
 /**
  * Use for registration user;
@@ -30,14 +28,8 @@ class TabRegistration extends Component {
 		registration.then(
 			result => {
 				this.setState({isRegistrationComplete: true, isLoading: false});
-				result.map((messages) => {
-					Materialize.toast(messages, 3000, 'green');
-				});
 			},
 			error => {
-				error.map((messages) => {
-					Materialize.toast(messages, 5000, 'red');
-				});
 				this.setState({isLoading: false});
 			}
 		);
@@ -68,7 +60,7 @@ class TabRegistration extends Component {
 							<h5 className='header teal-text'>Регистрация завершена!</h5>
 						</div>
 						<div className="col s12">
-							<a onClick={() =>{
+							<a onClick={() => {
 								this.props.closeModalRegistration();
 								this.props.history.push("/");
 							}}
