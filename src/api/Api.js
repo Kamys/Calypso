@@ -1,6 +1,11 @@
-function Api() {
-	this.registration = (fullName, login, password) => {
+class Api{
+	/**
+	 * Key for save auth token in localStorage.
+	 * @type {string}
+	 */
+	static keyAuthToken = 'auth_token';
 
+	static registration = (fullName, login, password) => {
 		return new Promise((resolve, reject) => {
 
 			const data = {
@@ -17,19 +22,27 @@ function Api() {
 					"Content-Type": "application/json"
 				},
 				mode: 'cors'
-			}).then((response) => {
-				return response.json();
-			}).then((json) => {
+			}).then((response) => response.json())
+				.then((json) => handleResponse(json)).catch((err) => {
+				throw new Error(err);
+			});
+
+			function handleResponse (json) {
 				if (json.status) {
 					resolve(json.data.messages);
+					let authToken = json.data['auth_token'];
+					localStorage.setItem(Api.keyAuthToken, JSON.stringify(authToken));
 				} else {
 					reject(json.data.messages);
 				}
-			}).catch((err) => {
-				throw new Error(err);
-			});
+			}
 		});
+
 	};
+
+	static getAuthToken = () => {
+		return localStorage.getItem(Api.keyAuthToken);
+	}
 }
 
 export default Api;

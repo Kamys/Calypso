@@ -4,6 +4,7 @@ import "jquery-validation";
 import Api from "../../api/Api";
 import * as Materialize from "materialize-css";
 import InputData from "./InputData";
+import Link from "react-router-dom/es/Link";
 
 /**
  * Use for registration user;
@@ -25,8 +26,7 @@ class TabRegistration extends Component {
 
 	onRegistration = () => {
 		const {fullName, login, password} = this.state;
-		let api = new Api();
-		let registration = api.registration(fullName, login, password);
+		let registration = Api.registration(fullName, login, password);
 		registration.then(
 			result => {
 				this.setState({isRegistrationComplete: true, isLoading: false});
@@ -68,7 +68,10 @@ class TabRegistration extends Component {
 							<h5 className='header teal-text'>Регистрация завершена!</h5>
 						</div>
 						<div className="col s12">
-							<a onClick={this.props.closeModalRegistration}
+							<a onClick={() =>{
+								this.props.closeModalRegistration();
+								this.props.history.push("/");
+							}}
 							   className="waves-effect waves-light btn-large">Продолжить</a>
 						</div>
 					</div>

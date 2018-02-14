@@ -36,7 +36,7 @@ class ModalAuthorization extends Component {
 						</li>
 					</ul>
 					<TabLogin/>
-					<TabRegistration closeModalRegistration={this.closeModalRegistration}/>
+					<TabRegistration history={this.props.history} closeModalRegistration={this.closeModalRegistration}/>
 				</div>
 			</div>
 		);
